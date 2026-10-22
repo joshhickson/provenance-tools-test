@@ -1,0 +1,58 @@
+commit bce35daea83f724e97657acf977958f041d66828
+Author: demo <demo@example.com>
+Date:   Thu Oct 22 00:34:02 2026 +0000
+
+    Retry charge() on transient timeouts using an idempotency key
+    
+    Blind retries after ProviderTimeout were avoided before because the
+    provider has no way to recognize a retried request, risking a double
+    charge. Add idempotency_key to Provider.charge and reuse the same key
+    across a bounded number of retries so timeouts can be retried safely.
+    
+    Entire-Checkpoint: 01M5GGEYGSK3S4CCYTP6QYCZTX
+
+ payments/charge.py   | 55 ++++++++++++++++++++++++++++++++--------------------
+ payments/provider.py | 11 +++++++++--
+ tests/test_charge.py | 35 ++++++++++++++++++++++++++-------
+ 3 files changed, 71 insertions(+), 30 deletions(-)
+
+commit 472d99a090f3e6d023d18f4f5e49932809bc004c
+Author: demo <demo@example.com>
+Date:   Thu Oct 22 00:32:17 2026 +0000
+
+    Trim charge() docstring to a single line
+    
+    Keep the idempotency/retry rationale as a comment at the except
+    clause it actually explains, instead of a multi-line docstring.
+    
+    Entire-Checkpoint: 01M5GGBQPFRP9V3JVTHD3PMFPS
+
+ payments/charge.py | 10 +++-------
+ 1 file changed, 3 insertions(+), 7 deletions(-)
+
+commit db419d015fc68446c77db49bbfece4428f84d69d
+Author: demo <demo@example.com>
+Date:   Thu Oct 22 00:31:30 2026 +0000
+
+    Add charge, refund, and receipt formatting with structured logging and tests
+    
+    Entire-Checkpoint: 01M5GGAAE6VA513HNZ07DRD0FY
+
+ payments/charge.py     | 44 ++++++++++++++++++++++++++++++++++++++++++++
+ payments/receipts.py   |  7 +++++++
+ payments/refund.py     | 36 ++++++++++++++++++++++++++++++++++++
+ tests/test_charge.py   | 36 ++++++++++++++++++++++++++++++++++++
+ tests/test_receipts.py | 22 ++++++++++++++++++++++
+ tests/test_refund.py   | 36 ++++++++++++++++++++++++++++++++++++
+ 6 files changed, 181 insertions(+)
+
+commit eabeaddaf9a8a229bc97e4de2aedb75b6063148c
+Author: demo <demo@example.com>
+Date:   Thu Oct 22 00:28:42 2026 +0000
+
+    seed: provider stub
+
+ README.md            |  6 ++++++
+ payments/__init__.py |  0
+ payments/provider.py | 19 +++++++++++++++++++
+ 3 files changed, 25 insertions(+)

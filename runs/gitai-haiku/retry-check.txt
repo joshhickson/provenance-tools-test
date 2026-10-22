@@ -1,0 +1,7 @@
+10:def charge(provider: Provider, card: str, amount_cents: int, max_retries: int = 3) -> str:
+13:    Retries on transient timeout errors with exponential backoff.
+19:    for attempt in range(max_retries + 1):
+26:            if attempt < max_retries:
+27:                backoff_seconds = 2 ** attempt
+28:                logger.warning("charge_timeout", extra={"card": card, "amount_cents": amount_cents, "attempt": attempt + 1, "max_retries": max_retries + 1, "backoff_seconds": backoff_seconds})
+29:                time.sleep(backoff_seconds)

@@ -1,0 +1,33 @@
+payments/refund.py
+  s_a746bada864e1d::t_a5ade2a4b9d5c6 1-2,4,6,10-15
+  s_a746bada864e1d::t_53aa4ee7157e32 3,5,7-9,16-40
+payments/receipts.py
+  s_a746bada864e1d::t_6f0e67f0b47b1c 1-7
+tests/test_receipts.py
+  s_a746bada864e1d::t_dfa597d155e562 1-22
+tests/test_charge.py
+  s_a746bada864e1d::t_8afd32c6e166a1 1-36
+payments/charge.py
+  s_a746bada864e1d::t_a929628ce70508 1-2,4,6,14-21
+  s_a746bada864e1d::t_080dda7a622461 3,5,7-13,22-44
+tests/test_refund.py
+  s_a746bada864e1d::t_8af122df701084 1-36
+.gitignore
+  s_a746bada864e1d::t_95735a41ef33f4 1-3
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "59c002c7c7d786127477a40ab544d7caf3cfcf7d",
+  "prompts": {},
+  "sessions": {
+    "s_a746bada864e1d": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "c613afea-f4cb-45f2-a26d-02e21a39cc50",
+        "model": "claude-sonnet-5"
+      },
+      "human_author": "demo <demo@example.com>"
+    }
+  }
+}

@@ -1,0 +1,27 @@
+line=19
+"""Charge a card using a payment provider."""
+
+import logging
+
+from payments.provider import Provider, ProviderTimeout, ProviderError
+
+logger = logging.getLogger(__name__)
+
+
+def charge(provider: Provider, card: str, amount_cents: int) -> str:
+    """Charge a card using the provider and return the charge id."""
+    logger.info("charge_started", extra={"card": card, "amount_cents": amount_cents})
+    try:
+        charge_id = provider.charge(card, amount_cents)
+        logger.info("charge_succeeded", extra={"card": card, "amount_cents": amount_cents, "charge_id": charge_id})
+        return charge_id
+    except ProviderTimeout:
+        logger.error("charge_timeout", extra={"card": card, "amount_cents": amount_cents})
+        raise
+    except ProviderError as e:
+        logger.error("charge_failed", extra={"card": card, "amount_cents": amount_cents, "error": str(e)})
+        raise
+{"id":1,"jsonrpc":"2.0","result":{"capabilities":{"tools":{}},"protocolVersion":"2024-11-05","serverInfo":{"name":"brain0-mcp","version":"0.1.1"}}}
+{"id":2,"jsonrpc":"2.0","result":{"content":[{"text":"{\"intents\":[],\"level\":\"symbol\",\"path\":\"payments/charge.py::charge\",\"risk\":{\"fused\":0.2630650997161865,\"goldSignal\":false},\"versions\":[{\"changeKind\":\"added\",\"committer\":\"demo\",\"linesAdded\":27,\"linesRemoved\":0,\"source\":\"bc4ccafb0d\",\"when\":\"2026-10-22T00:39:28+00:00\"}]}","type":"text"}],"isError":false}}
+{"id":3,"jsonrpc":"2.0","result":{"content":[{"text":"{\"intents\":[{\"agent\":\"claude-code\",\"maxDriftScore\":0.3333333432674408,\"model\":\"claude-haiku-4-5-20251001\",\"taskId\":\"tsk_78e5e1f4d39885df58bc9dc678e83d03\",\"when\":\"2026-10-22T00:39:34.945+00:00\"},{\"agent\":\"claude-code\",\"maxDriftScore\":0.7777777910232544,\"model\":\"claude-haiku-4-5-20251001\",\"taskId\":\"tsk_1f0e39648f2ca4a58bc0684d39335d1e\",\"when\":\"2026-10-22T00:38:19.767+00:00\"}],\"level\":\"file\",\"path\":\"payments/charge.py\",\"risk\":{\"fused\":0.28982263803482056,\"goldSignal\":false},\"versions\":[{\"changeKind\":\"added\",\"committer\":\"demo\",\"linesAdded\":36,\"linesRemoved\":0,\"source\":\"bc4ccafb0d\",\"when\":\"2026-10-22T00:39:28+00:00\"}]}","type":"text"}],"isError":false}}
+{"id":4,"jsonrpc":"2.0","result":{"tools":[{"description":"Root-cause debug: find the intents/code most likely related to an issue, by reference.","inputSchema":{"properties":{"k":{"description":"max nodes to return (default 8)","type":"integer"},"query":{"type":"string"}},"required":["query"],"type":"object"},"name":"brain0_debug"},{"description":"Audit a repo: risk distribution, gold signals, and the riskiest nodes.","inputSchema":{"properties":{"level":{"enum":["repo","module","file","symbol"],"type":"string"},"repo":{"type":"string"}},"type":"object"},"name":"brain0_audit"},{"description":"Provenance context for a file or symbol BEFORE touching it: risk, recent history, and the agent intents (agent/model/when/drift) behind it. Path is repo-relative; symbols as `path::Symbol`.","inputSchema":{"properties":{"path":{"type":"string"},"repo":{"type":"string"}},"required":["path"],"type":"object"},"name":"brain0_context"},{"description":"Which intent wrote this code: resolve a file (and optionally a 1-based line, mapped to its symbol) to the agent intents and history behind it.","inputSchema":{"properties":{"file":{"type":"string"},"line":{"type":"integer"},"repo":{"type":"string"}},"required":["file"],"type":"object"},"name":"brain0_blame"}]}}

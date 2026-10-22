@@ -1,0 +1,44 @@
+commit 53baae40573589717cf985e4963268eed923614f
+Author: demo <demo@example.com>
+Date:   Thu Oct 22 00:33:21 2026 +0000
+
+    Tidy docstrings to single-line, preserve rationale as inline comments
+    
+    charge() and refund() had multi-line docstrings explaining the
+    no-retry-on-timeout rule; shortened them to one line and moved the
+    rationale to a comment at the point it applies. No behavior change.
+
+ payments/charge.py | 10 +++-------
+ payments/refund.py |  8 +++-----
+ 2 files changed, 6 insertions(+), 12 deletions(-)
+
+commit 59c002c7c7d786127477a40ab544d7caf3cfcf7d
+Author: demo <demo@example.com>
+Date:   Thu Oct 22 00:32:07 2026 +0000
+
+    Add charge, refund, and receipt formatting with tests
+    
+    Includes structured logging and no-retry-on-timeout handling per the
+    provider's lack of idempotency key support.
+    
+    Co-Authored-By: Claude Sonnet 5 <noreply@anthropic.com>
+
+ .gitignore             |  3 +++
+ payments/charge.py     | 44 ++++++++++++++++++++++++++++++++++++++++++++
+ payments/receipts.py   |  7 +++++++
+ payments/refund.py     | 40 ++++++++++++++++++++++++++++++++++++++++
+ tests/test_charge.py   | 36 ++++++++++++++++++++++++++++++++++++
+ tests/test_receipts.py | 22 ++++++++++++++++++++++
+ tests/test_refund.py   | 36 ++++++++++++++++++++++++++++++++++++
+ 7 files changed, 188 insertions(+)
+
+commit dd8c224eced29332aad5cdfd074f114d4da22c2b
+Author: demo <demo@example.com>
+Date:   Thu Oct 22 00:30:10 2026 +0000
+
+    seed: provider stub
+
+ README.md            |  6 ++++++
+ payments/__init__.py |  0
+ payments/provider.py | 19 +++++++++++++++++++
+ 3 files changed, 25 insertions(+)

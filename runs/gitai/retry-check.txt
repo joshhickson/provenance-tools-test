@@ -1,0 +1,2 @@
+16:    logger.info("charge.attempt card=%s amount_cents=%d", _masked(card), amount_cents)
+21:        # have still gone through; retrying here risks double-charging the card.

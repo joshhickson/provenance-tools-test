@@ -1,0 +1,96 @@
+entire checkpoint — Inspect and search checkpoints
+Operations on checkpoints — the persistent records of agent work tied to commits.
+
+Commands:
+  list     List checkpoints on the current branch
+  explain  Explain a checkpoint, commit, or session
+  tokens   Show token usage and optimization recommendations
+  search   Search checkpoints (semantic + keyword)
+  delete   Delete a checkpoint locally and from checkpoint remotes
+
+Examples:
+  entire checkpoint list
+  entire checkpoint explain <id|sha>
+  entire checkpoint tokens <id>
+  entire checkpoint search "fix login"
+  entire checkpoint delete <id> --dry-run
+
+Current repo: not auto-detectable here (no origin remote / detached HEAD); pass --repo explicitly.
+
+Inherited flags:
+      --context name   Act as this saved login name for this command only — including the git and agent processes it spawns — instead of the active context (entire auth contexts lists them)
+
+Subcommands: delete · explain · list · search · tokens
+             read-only except: delete, explain
+Next:  entire agent-help checkpoint <subcommand>
+=====
+● Checkpoint 01M5GGAAE6VA513HNZ07DRD0FY
+  session  f09c83c6-29f2-4b15-a0bd-54dac0600da9
+  created  2026-10-22 00:31:31
+  author   demo <demo@example.com>
+  tokens   868.6k
+  commits  db419d0 Add charge, refund, and receipt formatting with structured logging and tests
+────────────────────────────────────────────────────────────
+## Intent
+
+Implement charge(provider, card, amount_cents) in payments/charge.py. It shou...
+
+## Summary
+
+*Not generated yet. Run ‘entire checkpoint explain --generate 01M5GGAAE6VA513HNZ07DRD0FY‘ to create an AI summary.*
+
+## Files (4)
+
+- `payments/charge.py`
+- `payments/refund.py`
+- `tests/test_charge.py`
+- `tests/test_refund.py`
+
+── Transcript (checkpoint scope) ───────────────────────────
+[User] Implement charge(provider, card, amount_cents) in payments/charge.py. It should call provider.charge(...) and return the charge id.
+
+Important constraint from our payment provider: they do NOT support idempotency keys, and a request that times out may still have charged the card. So never retry a charge after a timeout. Surface the ProviderTimeout to the caller instead.
+
+Add pytest tests that mock the provider.
+
+[Tool] Bash: find /work/repo -type f -name "*.py" | grep -v node_modules | head -100 && echo --- && ls /work/repo
+
+[Tool] Read: /work/repo/payments/provider.py
+
+[Tool] Read: /work/repo/payments/__init__.py
+
+[Tool] Read: /work/repo/README.md
+
+[Tool] Bash: find /work/repo -iname "*test*" -o -iname "pytest.ini" -o -iname "pyproject.toml" -o -iname "setup.py" | grep -v node_modules
+
+[Assistant] No existing test setup. I'll create `payments/charge.py` and `tests/test_charge.py`.
+
+[Tool] Write: /work/repo/payments/charge.py
+
+[Tool] Edit: /work/repo/payments/charge.py
+
+[Assistant] Now the tests.
+
+[Tool] Write: /work/repo/tests/test_charge.py
+
+[Tool] Bash: python3 -m pytest tests/ -v 2>&1 | tail -40
+
+[Assistant] All 3 tests pass. Created `payments/charge.py` with `charge()` that calls `provider.charge(card, amount_cents)` and returns the id, letting `ProviderTimeout`/`ProviderError` propagate uncaught (no retry logic at all), plus `tests/test_charge.py` covering the success path, timeout propagation, and provider-error propagation using mocked `Provider` instances.
+
+[User] Add refund(provider, charge_id, amount_cents) to payments/refund.py, with pytest tests that mock the provider.
+
+[Tool] Write: /work/repo/payments/refund.py
+
+[Tool] Write: /work/repo/tests/test_refund.py
+
+[Tool] Bash: python3 -m pytest tests/ -v 2>&1 | tail -40
+
+[Assistant] All 6 tests pass. Added `payments/refund.py` with `refund(provider, charge_id, amount_cents)` mirroring `charge()` — a thin wrapper around `provider.refund(...)` with no retry/error-swallowing — and `tests/test_refund.py` covering success, timeout propagation, and provider-error propagation.
+
+[User] Add structured logging (Python's logging module, key=value style) to charge and refund. Keep the tests passing.
+
+[Tool] Read: /work/repo/payments/charge.py
+
+[Tool] Read: /work/repo/payments/refund.py
+
+[Tool] Edit: /work/repo/payments/charge.py

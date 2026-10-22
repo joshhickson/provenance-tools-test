@@ -1,0 +1,9 @@
+11:MAX_ATTEMPTS = 3
+12:RETRY_BACKOFF_SECONDS = 0.5
+21:    logger.info("event=charge_attempt card=%s amount_cents=%d", _masked(card), amount_cents)
+22:    # Reused across retries: lets the provider recognize a retried request
+25:    for attempt in range(1, MAX_ATTEMPTS + 1):
+30:                "event=charge_timeout card=%s amount_cents=%d attempt=%d",
+33:                attempt,
+35:            if attempt == MAX_ATTEMPTS:
+37:            time.sleep(RETRY_BACKOFF_SECONDS * attempt)

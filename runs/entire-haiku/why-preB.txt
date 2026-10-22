@@ -1,0 +1,23 @@
+== C1 test diff
+-def test_charge_with_different_amounts():
+-    """Test charge with various amounts."""
+-    provider = Mock()
+-    provider.charge.return_value = "charge_789"
+-
+-    result = charge(provider, "card_999", 100)
+-
+-    assert result == "charge_789"
+-    provider.charge.assert_called_once_with("card_999", 100)
+== entire why :19
+
+  Line 19 in payments/charge.py
+          raise
+
+  Checkpoint from Claude Code · claude-haiku-4-5-20251001 · checkpoint 01M5GGSEW93VJ8ZF1R49757WZH · session bc09d82b · commit 967e9994
+  Prompt: "Implement charge(provider, card, amount_cents) in payments/charge.py. It should call provider.charge(...) and return the charge id. Important constraint from..."
+
+  Full context: entire checkpoint explain 01M5GGSEW93VJ8ZF1R49757WZH
+
+26:Important constraint from our payment provider: they do NOT support idempotency keys, and a request that times out may still have charged the card. So never retry a charge after a timeout. Surface the ProviderTimeout to the caller instead.
+61:- Lets `ProviderTimeout` propagate to the caller (no retry logic) per your constraint about the provider not supporting idempotency keys
+69:All 4 tests pass. The implementation is intentionally simple and straightforward—no retry logic is needed since the provider can't guarantee idempotency.

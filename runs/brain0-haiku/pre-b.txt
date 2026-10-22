@@ -1,0 +1,63 @@
++ export PATH=/home/tester/.npm-global/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
++ PATH=/home/tester/.npm-global/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
++ cd /work/repo
++ D=/home/tester/b0
++ B0=(--db "$D/index.db" --payload "$D/payload" --key-file "$D/keyring.key")
++ mkdir -p /home/tester/b0
++ brain0 ingest --repo demo/payments --db /home/tester/b0/index.db --payload /home/tester/b0/payload --key-file /home/tester/b0/keyring.key
+git mode: 3 commit(s)
+  · 8 changed (added 8, modified 0, renamed 0, moved 0, removed 0)
+  · 18 changed (added 18, modified 0, renamed 0, moved 0, removed 0)
+  · 12 changed (added 0, modified 12, renamed 0, moved 0, removed 0)
+done. index: /home/tester/b0/index.db
++ brain0 observe --repo demo/payments --db /home/tester/b0/index.db --payload /home/tester/b0/payload --key-file /home/tester/b0/keyring.key
+models (configured):
+  summarizer: ollama · qwen3:4b @ http://localhost:11434
+  embeddings: ollama · qwen3-embedding:0.6b @ http://localhost:11434 (dim 1024)
+  summarizer: qwen3:4b (lazy — loads on the first uncached turn)
+  probing embedder 'qwen3-embedding:0.6b'…
+warning: embedding model 'qwen3-embedding:0.6b' failed: http error: http://localhost:11434/api/embeddings: Connection Failed: Connect error: Connection refused (os error 111)
+  hint: ollama pull qwen3-embedding:0.6b
+  falling back to local feature-hash embeddings
+  embeddings in use: local-feature-hash (dim 256) ✓
+processing 2 session(s), 5 new turn(s)…
+  1/5 turns (  0.0%)  summarizing…  elapsed 0s        
+  probing summarizer 'qwen3:4b' (first uncached turn — may load the model)…
+  summarizer 'qwen3:4b' unreachable → deterministic offline fallback
+  2/5 turns ( 20.0%)  summarizing…  elapsed 0s          3/5 turns ( 40.0%)  summarizing…  elapsed 0s          4/5 turns ( 60.0%)  summarizing…  elapsed 0s          5/5 turns ( 80.0%)  summarizing…  elapsed 0s          5/5 turns (100.0%)  74.86 turn/s  ETA 0s    
+observed 2 session(s), 5 turn(s) → 2 task(s), 2 embedding(s)
++ brain0 report --repo demo/payments --db /home/tester/b0/index.db --md
+# brain0 report — demo/payments
+2 agent session(s) · 3 commit(s) observed
+
+## drift — declared vs done (2)
+
+- [0.33] claude-code (2026-10-22T00:39:16.050+00:00) — changed but not declared: README.md, payments/__init__.py, payments/provider.py
+- [0.33] claude-code (2026-10-22T00:39:34.945+00:00) — changed but not declared: README.md, payments/__init__.py, payments/provider.py
+
+## sensitive reads — DLP (0)
+
+- none: no agent session read secret-bearing content
+
+## top risk (0 gold signal(s))
+
+- 0.89 payments/test_refund.py
+- 0.89 payments/test_receipts.py
+- 0.80 payments/test_charge.py
+- 0.62 payments/refund.py
+- 0.59 payments/provider.py
+- 0.59 payments/receipts.py
+- 0.56 README.md
+- 0.53 payments/__init__.py
+- 0.29 payments/charge.py
+
+## agent footprint
+
+- 9/9 files touched by agent intents (+434 / -0 lines linked to agents)
++ claude mcp add brain0 -- /home/tester/.npm-global/bin/brain0 mcp --db /home/tester/b0/index.db --repo demo/payments
+Added stdio MCP server brain0 with command: /home/tester/.npm-global/bin/brain0 mcp --db /home/tester/b0/index.db --repo demo/payments to local config
+File modified: /home/tester/.claude.json [project: /work/repo]
++ claude mcp list
+Checking MCP server health…
+
+brain0: /home/tester/.npm-global/bin/brain0 mcp --db /home/tester/b0/index.db --repo demo/payments - ✔ Connected

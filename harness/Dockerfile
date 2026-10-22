@@ -1,0 +1,14 @@
+# One throwaway container per tool run. Nothing is installed on the host.
+FROM node:20-bookworm
+
+RUN apt-get update \
+ && apt-get install -y --no-install-recommends python3 python3-pytest git curl ca-certificates \
+ && rm -rf /var/lib/apt/lists/*
+
+# The coding agent under test.
+RUN npm install -g @anthropic-ai/claude-code
+
+# Claude Code won't skip permission prompts as root, so run as a normal user.
+RUN useradd -m tester
+USER tester
+WORKDIR /work

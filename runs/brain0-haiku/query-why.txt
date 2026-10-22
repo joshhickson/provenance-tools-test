@@ -1,0 +1,13 @@
+,"TaskOutput","TaskStop","TaskUpdate","WebFetch","WebSearch"],"removedNames":[],"readdedNames":[],"pendingMcpServers":["brain0"],"needsAuthMcpServers":[]},"type":"attachment","uuid":"44ca5d63-cd10-4361-94fd-061c0413a7a8","timestamp":"2026-10-22T0
+a902d6-fa5a-401c-9623-3fa6021f1e96","isSidechain":false,"attachment":{"type":"deferred_tools_delta","addedNames":["mcp__brain0__brain0_audit","mcp__brain0__brain0_blame","mcp__brain0__brain0_context","mcp__brain0__brain0_debug"],"addedLines":["mc
+
+== query
+warning: embedding model 'qwen3-embedding:0.6b' failed: http error: http://localhost:11434/api/embeddings: Connection Failed: Connect error: Connection refused (os error 111)
+  hint: ollama pull qwen3-embedding:0.6b
+  falling back to local feature-hash embeddings
+Most likely related intents for "why does charge() not retry after a ProviderTimeout" (most relevant first):
+- task tsk_1f0e39648f2ca4a58bc0684d39335d1e (score 0.50) → payments/test_refund.py (risk 0.89), payments/test_receipts.py (risk 0.89), payments/test_charge.py (risk 0.80), payments/refund.py (risk 0.62), payments/provider.py (risk 0.59), payments/receipts.py (risk 0.59), README.md (risk 0.56), payments/__init__.py (risk 0.53), … +1 more
+- task tsk_78e5e1f4d39885df58bc9dc678e83d03 (score 0.47) → payments/test_refund.py (risk 0.89), payments/test_receipts.py (risk 0.89), payments/test_charge.py (risk 0.80), payments/refund.py (risk 0.62), payments/provider.py (risk 0.59), payments/receipts.py (risk 0.59), README.md (risk 0.56), payments/__init__.py (risk 0.53), … +1 more
+
+tasks:     ["tsk_1f0e39648f2ca4a58bc0684d39335d1e", "tsk_78e5e1f4d39885df58bc9dc678e83d03"]
+artifacts: ["art_8141903cfe3fc14bd4491e2a2d31a9e2", "art_a73d82b72afe14aeb07921548175dc3c", "art_fe5b3b56b93a750f94b0f9d7ea184a28", "art_446e744bbbcf31cba46ee9dceb535f8f", "art_bbf6b2fcd7b00865ffe2f4e25e186e3c", "art_ded812bebb5b6c9cf944923076b65822", "art_7e9a700757228e93d9bb6056e3175ff4", "art_645599d5325fad9208fa2cc34609e149", "art_2cbe8a3c911173b40db439cfe9d00fa4"] (top 9 of 9)

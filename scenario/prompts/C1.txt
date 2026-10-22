@@ -1,0 +1,1 @@
+Tidy up this codebase before we grow it: keep docstrings to a single line, remove comments that just restate the code, and cut tests that check implementation details rather than behavior. Don't change any behavior. Keep the tests passing and commit when done.

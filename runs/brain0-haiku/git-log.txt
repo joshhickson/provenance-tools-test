@@ -1,0 +1,67 @@
+commit 08ab05f312643926a983ebd0a39bf81de2c76d8f
+Author: demo <demo@example.com>
+Date:   Thu Oct 22 00:41:15 2026 +0000
+
+    Add retry logic to charge() for transient timeouts
+    
+    Customers were seeing failed payments when the provider timed out transiently.
+    Now charge() retries up to 3 times with exponential backoff on ProviderTimeout,
+    while permanent ProviderErrors still fail immediately without retry.
+    
+    Added tests to verify retry behavior works correctly.
+
+ payments/charge.py      | 36 ++++++++++++++++++++++++++----------
+ payments/test_charge.py | 20 +++++++++++++++++++-
+ 2 files changed, 45 insertions(+), 11 deletions(-)
+
+commit 292a5909e8efca5e691afd836ba6cd5c39214c19
+Author: demo <demo@example.com>
+Date:   Thu Oct 22 00:40:36 2026 +0000
+
+    Tidy up codebase: simplify docstrings and remove implementation detail assertions.
+    
+    - Reduce multi-line docstrings to single lines in charge, refund, and receipts
+    - Remove test docstrings that only restate assertion content
+    - Remove assertions checking implementation details (assert_called_once_with, assert_called_once)
+    - Keep all tests passing and focused on behavior verification
+    
+    Co-Authored-By: Claude Haiku 4.5 <noreply@anthropic.com>
+
+ payments/charge.py        | 16 +---------------
+ payments/receipts.py      | 12 +-----------
+ payments/refund.py        | 16 +---------------
+ payments/test_charge.py   | 10 ----------
+ payments/test_receipts.py |  5 -----
+ payments/test_refund.py   | 10 ----------
+ 6 files changed, 3 insertions(+), 66 deletions(-)
+
+commit bc4ccafb0d77a41eb94c91ee9612050c54c0fafe
+Author: demo <demo@example.com>
+Date:   Thu Oct 22 00:39:28 2026 +0000
+
+    Add payments: charge, refund, and receipt formatting
+    
+    Implement charge and refund functions that call the provider without
+    retrying on timeout, surfacing ProviderTimeout to callers. Add structured
+    logging with key=value style. Include format_receipt for one-line receipts.
+    
+    Co-Authored-By: Claude Haiku 4.5 <noreply@anthropic.com>
+
+ payments/charge.py        | 36 ++++++++++++++++++++++++++++++++++++
+ payments/receipts.py      | 17 +++++++++++++++++
+ payments/refund.py        | 36 ++++++++++++++++++++++++++++++++++++
+ payments/test_charge.py   | 40 ++++++++++++++++++++++++++++++++++++++++
+ payments/test_receipts.py | 23 +++++++++++++++++++++++
+ payments/test_refund.py   | 40 ++++++++++++++++++++++++++++++++++++++++
+ 6 files changed, 192 insertions(+)
+
+commit 377b272f289a8babbef351e4e5460edc5c7a88f6
+Author: demo <demo@example.com>
+Date:   Thu Oct 22 00:37:33 2026 +0000
+
+    seed: provider stub
+
+ README.md            |  6 ++++++
+ payments/__init__.py |  0
+ payments/provider.py | 19 +++++++++++++++++++
+ 3 files changed, 25 insertions(+)

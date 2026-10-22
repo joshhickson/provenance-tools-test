@@ -1,0 +1,65 @@
+commit 2855f21396a8a90418cbfbaf86fcdee2239d4b96
+Author: demo <demo@example.com>
+Date:   Thu Oct 22 00:41:37 2026 +0000
+
+    Make charge() resilient to transient provider timeouts with exponential backoff.
+    
+    Retries on ProviderTimeout with exponential backoff (1s, 2s, 4s) to handle
+    transient slowness. ProviderError (permanent failures) are not retried.
+    
+    Co-Authored-By: Claude Haiku 4.5 <noreply@anthropic.com>
+
+ payments/charge.py | 46 ++++++++++++++++++++++++++++------------------
+ 1 file changed, 28 insertions(+), 18 deletions(-)
+
+commit 9ce0fc63f025af721ebfaf722758638fe531ab31
+Author: demo <demo@example.com>
+Date:   Thu Oct 22 00:40:38 2026 +0000
+
+    Tidy up codebase: single-line docstrings and behavior-focused tests.
+    
+    - Collapse multi-line docstrings to single line in charge, refund, and receipts
+    - Remove implementation detail checks (assert_called_once_with mocks) from tests
+    - Remove redundant parameter-variation tests from charge and refund
+    - Keep all behavior-driven tests for exceptions and output formatting
+    
+    Co-Authored-By: Claude Haiku 4.5 <noreply@anthropic.com>
+
+ payments/charge.py      | 16 +---------------
+ payments/receipts.py    | 11 +----------
+ payments/refund.py      | 16 +---------------
+ payments/test_charge.py | 20 ++------------------
+ payments/test_refund.py | 20 ++------------------
+ 5 files changed, 7 insertions(+), 76 deletions(-)
+
+commit 37db42eb3e6743e32639a28419390de97c6f5955
+Author: demo <demo@example.com>
+Date:   Thu Oct 22 00:39:39 2026 +0000
+
+    Add charge, refund, and receipt formatting with structured logging and tests
+    
+    Implemented charge() and refund() functions with proper timeout handling
+    (surfaced to caller, no retry). Added structured logging (key=value) to both.
+    Added format_receipt() for generating one-line receipt strings.
+    All functions include comprehensive pytest tests with mocked providers.
+    
+    Co-Authored-By: Claude Haiku 4.5 <noreply@anthropic.com>
+
+ payments/charge.py        | 43 +++++++++++++++++++++++++++++++++++++++
+ payments/receipts.py      | 18 +++++++++++++++++
+ payments/refund.py        | 43 +++++++++++++++++++++++++++++++++++++++
+ payments/test_charge.py   | 51 +++++++++++++++++++++++++++++++++++++++++++++++
+ payments/test_receipts.py | 47 +++++++++++++++++++++++++++++++++++++++++++
+ payments/test_refund.py   | 51 +++++++++++++++++++++++++++++++++++++++++++++++
+ 6 files changed, 253 insertions(+)
+
+commit b37dd78b2496d0e0be043ca6baa2f2cf9e842b61
+Author: demo <demo@example.com>
+Date:   Thu Oct 22 00:37:34 2026 +0000
+
+    seed: provider stub
+
+ README.md            |  6 ++++++
+ payments/__init__.py |  0
+ payments/provider.py | 19 +++++++++++++++++++
+ 3 files changed, 25 insertions(+)

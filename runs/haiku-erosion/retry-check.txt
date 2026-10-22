@@ -1,0 +1,7 @@
+7:MAX_RETRIES = 3
+8:INITIAL_BACKOFF_SECONDS = 1
+17:    for attempt in range(MAX_RETRIES):
+24:            if attempt < MAX_RETRIES - 1:
+25:                backoff = INITIAL_BACKOFF_SECONDS * (2 ** attempt)
+26:                logger.warning("charge_timeout_retry", extra={"attempt": attempt + 1, "backoff_seconds": backoff, "amount_cents": amount_cents})
+27:                time.sleep(backoff)

@@ -1,0 +1,38 @@
+"notes"
+43e6212 Add hello.py
+214cc27 init
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "43e62128fbfa9fabec1deb18645b5ddae8e54d61",
+  "prompts": {},
+  "sessions": {
+    "s_20bc96ff5e6f6f": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "f4ebc465-c971-4319-836b-cef9bcb57255",
+        "model": "unknown"
+      },
+      "human_author": "demo <demo@example.com>"
+    }
+  }
+}== show-prompt
+{
+  "commit": "43e62128fbfa9fabec1deb18645b5ddae8e54d61",
+  "prompt": {
+    "accepted_lines": 0,
+    "agent_id": {
+      "id": "f4ebc465-c971-4319-836b-cef9bcb57255",
+      "model": "unknown",
+      "tool": "claude"
+    },
+    "human_author": "demo <demo@example.com>",
+    "overriden_lines": 0,
+    "total_additions": 0,
+    "total_deletions": 0
+  },
+  "prompt_id": "s_20bc96ff5e6f6f"
+}
+/home/tester/.git-ai/internal/metrics-db-wal
+/home/tester/.git-ai/internal/bash-checkpoints-db-wal

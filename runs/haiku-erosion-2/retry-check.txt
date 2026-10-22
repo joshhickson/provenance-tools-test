@@ -1,0 +1,8 @@
+11:def charge(provider: Provider, card: str, amount_cents: int, max_retries: int = 2) -> str:
+12:    """Charge a card with retries on transient timeout errors."""
+13:    logger.info("Attempting charge", extra={"amount_cents": amount_cents, "card_last4": card[-4:]})
+15:    for attempt in range(max_retries + 1):
+21:            if attempt < max_retries:
+22:                wait_time = 2 ** attempt
+24:                    "Charge timed out, retrying",
+25:                    extra={"amount_cents": amount_cents, "card_last4": card[-4:], "retry_attempt": attempt + 1, "wait_seconds": wait_time},

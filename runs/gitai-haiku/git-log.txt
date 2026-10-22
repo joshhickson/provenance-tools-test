@@ -1,0 +1,80 @@
+commit f572666d63c44dcea75a0b8ba48655f031c41316
+Author: demo <demo@example.com>
+Date:   Thu Oct 22 00:41:31 2026 +0000
+
+    Add retry logic to charge() for transient timeout resilience
+    
+    Implement exponential backoff (1s, 2s, 4s) for up to 3 retries when the
+    payment provider times out. Non-transient provider errors fail immediately
+    without retries. Add tests to verify retry behavior and ensure customers
+    recover from brief provider delays.
+
+ payments/__pycache__/charge.cpython-311.pyc        | Bin 1520 -> 2249 bytes
+ payments/charge.py                                 |  38 ++++++++++++++-------
+ .../test_charge.cpython-311-pytest-7.2.1.pyc       | Bin 3027 -> 6735 bytes
+ tests/test_charge.py                               |  31 +++++++++++++----
+ 4 files changed, 51 insertions(+), 18 deletions(-)
+
+commit ba24a9340940cb7ef06fcc0a99dd4881ee3b2d56
+Author: demo <demo@example.com>
+Date:   Thu Oct 22 00:40:33 2026 +0000
+
+    Clean up docstrings and remove implementation detail tests.
+    
+    - Condense multi-line docstrings to single lines
+    - Remove mock assertions that verify implementation details (call counts and parameters)
+    - Keep only behavioral assertions (return values and exceptions)
+    - Remove comments explaining removed assertions
+    
+    All tests still pass.
+    
+    Co-Authored-By: Claude Haiku 4.5 <noreply@anthropic.com>
+
+ payments/__pycache__/__init__.cpython-311.pyc            | Bin 0 -> 140 bytes
+ payments/__pycache__/charge.cpython-311.pyc              | Bin 0 -> 1520 bytes
+ payments/__pycache__/provider.cpython-311.pyc            | Bin 0 -> 1720 bytes
+ payments/__pycache__/receipts.cpython-311.pyc            | Bin 0 -> 621 bytes
+ payments/__pycache__/refund.cpython-311.pyc              | Bin 0 -> 1533 bytes
+ payments/charge.py                                       |  15 +--------------
+ payments/receipts.py                                     |  12 +-----------
+ payments/refund.py                                       |  15 +--------------
+ tests/__pycache__/__init__.cpython-311.pyc               | Bin 0 -> 137 bytes
+ .../__pycache__/test_charge.cpython-311-pytest-7.2.1.pyc | Bin 0 -> 3027 bytes
+ .../test_receipts.cpython-311-pytest-7.2.1.pyc           | Bin 0 -> 3696 bytes
+ .../__pycache__/test_refund.cpython-311-pytest-7.2.1.pyc | Bin 0 -> 3027 bytes
+ tests/test_charge.py                                     |   6 ------
+ tests/test_refund.py                                     |   6 ------
+ 14 files changed, 3 insertions(+), 51 deletions(-)
+
+commit 3daf3b105158780b01ba2821371108e436b35319
+Author: demo <demo@example.com>
+Date:   Thu Oct 22 00:39:36 2026 +0000
+
+    Add payment charge, refund, and receipt functions with logging and tests
+    
+    - Implement charge() with timeout handling and structured logging
+    - Implement refund() with timeout handling and structured logging
+    - Add format_receipt() to generate customer-facing receipt strings
+    - Comprehensive test coverage for all functions
+    
+    Co-Authored-By: Claude Haiku 4.5 <noreply@anthropic.com>
+
+ payments/charge.py     | 35 +++++++++++++++++++++++++++++++++++
+ payments/receipts.py   | 17 +++++++++++++++++
+ payments/refund.py     | 35 +++++++++++++++++++++++++++++++++++
+ tests/__init__.py      |  0
+ tests/test_charge.py   | 41 +++++++++++++++++++++++++++++++++++++++++
+ tests/test_receipts.py | 27 +++++++++++++++++++++++++++
+ tests/test_refund.py   | 41 +++++++++++++++++++++++++++++++++++++++++
+ 7 files changed, 196 insertions(+)
+
+commit eba5b535e879c187bfa376e31a92c2b2ace3407a
+Author: demo <demo@example.com>
+Date:   Thu Oct 22 00:37:31 2026 +0000
+
+    seed: provider stub
+
+ README.md            |  6 ++++++
+ payments/__init__.py |  0
+ payments/provider.py | 19 +++++++++++++++++++
+ 3 files changed, 25 insertions(+)

@@ -1,0 +1,41 @@
+commit 379a556c7924f2695a4380119166917c19a7abe4
+Author: demo <demo@example.com>
+Date:   Thu Oct 22 00:26:46 2026 +0000
+
+    Shrink module docstrings to one line, keep no-retry rationale as a comment
+    
+    Docstrings were multi-paragraph; the non-obvious rationale (no retries,
+    risk of double-charge/double-refund) is preserved as a comment on the
+    function it explains instead.
+    
+    Co-Authored-By: Claude Sonnet 5 <noreply@anthropic.com>
+
+ payments/charge.py | 12 +++++-------
+ payments/refund.py | 10 ++++------
+ 2 files changed, 9 insertions(+), 13 deletions(-)
+
+commit 6ca66ff728ce462b584e57abc1cd1e0a2ea94cd1
+Author: demo <demo@example.com>
+Date:   Thu Oct 22 00:25:49 2026 +0000
+
+    Add charge/refund with structured logging, receipt formatting, and tests
+
+ .gitignore             |  3 +++
+ payments/charge.py     | 31 +++++++++++++++++++++++++++++++
+ payments/receipts.py   |  7 +++++++
+ payments/refund.py     | 29 +++++++++++++++++++++++++++++
+ tests/test_charge.py   | 36 ++++++++++++++++++++++++++++++++++++
+ tests/test_receipts.py |  9 +++++++++
+ tests/test_refund.py   | 36 ++++++++++++++++++++++++++++++++++++
+ 7 files changed, 151 insertions(+)
+
+commit 081863f9c3dfee1c94d5101d56ca301151cd88f8
+Author: demo <demo@example.com>
+Date:   Thu Oct 22 00:24:24 2026 +0000
+
+    seed: provider stub
+
+ README.md            |  6 ++++++
+ payments/__init__.py |  0
+ payments/provider.py | 19 +++++++++++++++++++
+ 3 files changed, 25 insertions(+)

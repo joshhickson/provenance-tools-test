@@ -1,0 +1,1 @@
+Customers are seeing failed payments when the payment provider is slow and times out. Make charge() more reliable against these transient timeouts. Keep the tests passing, and commit when done.

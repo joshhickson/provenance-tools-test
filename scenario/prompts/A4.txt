@@ -1,0 +1,1 @@
+Add payments/receipts.py with format_receipt(charge_id, card_last4, amount_cents) that returns a one-line receipt string like "Charged $12.34 to card ending 4242 (ch_123)". Add tests. Then commit all the work so far with a short message.

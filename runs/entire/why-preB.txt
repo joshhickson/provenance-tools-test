@@ -1,0 +1,31 @@
+10:def _masked(card: str) -> str:
+11:    return f"***{card[-4:]}" if len(card) >= 4 else "***"
+12:
+13:
+14:def charge(provider: Provider, card: str, amount_cents: int) -> str:
+15:    """Charge a card for ``amount_cents`` and return the charge id."""
+16:    logger.info("event=charge_attempt card=%s amount_cents=%d", _masked(card), amount_cents)
+17:    try:
+18:        charge_id = provider.charge(card, amount_cents)
+19:    except ProviderTimeout:
+20:        # Not retried: the provider lacks idempotency keys, so a timed-out
+21:        # request may have already gone through and retrying risks a double charge.
+22:        logger.warning(
+23:            "event=charge_timeout card=%s amount_cents=%d", _masked(card), amount_cents
+24:        )
+25:        raise
+26:    except ProviderError as exc:
+27:        logger.error(
+28:            "event=charge_error card=%s amount_cents=%d error=%s",
+29:            _masked(card),
+30:            amount_cents,
+== entire why payments/charge.py:25
+
+  Line 25 in payments/charge.py
+          raise
+
+  Checkpoint from Claude Code · claude-sonnet-5 · checkpoint 01M5GGAAE6VA513HNZ07DRD0FY · session f09c83c6 · commit db419d01
+  Prompt: "Implement charge(provider, card, amount_cents) in payments/charge.py. It should call provider.charge(...) and return the charge id. Important constraint from..."
+
+  Full context: entire checkpoint explain 01M5GGAAE6VA513HNZ07DRD0FY
+

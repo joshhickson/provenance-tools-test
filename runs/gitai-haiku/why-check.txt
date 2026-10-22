@@ -1,0 +1,9 @@
+A=3daf3b1
+prompts: 0
+== blame --show-prompt line 19
+3daf3b10 (claude [s_4c916] 2026-10-22 00:39:36 +0000 19)         raise
+== skill use in B
+      6 "name":"Bash"
+      2 "name":"Edit"
+      3 "name":"Read"
+1

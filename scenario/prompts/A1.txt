@@ -1,0 +1,5 @@
+Implement charge(provider, card, amount_cents) in payments/charge.py. It should call provider.charge(...) and return the charge id.
+
+Important constraint from our payment provider: they do NOT support idempotency keys, and a request that times out may still have charged the card. So never retry a charge after a timeout. Surface the ProviderTimeout to the caller instead.
+
+Add pytest tests that mock the provider.

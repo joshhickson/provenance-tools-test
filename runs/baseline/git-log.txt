@@ -1,0 +1,29 @@
+commit 139630e2bc14a55043bca9ade5570c47f8c9beec
+Author: demo <demo@example.com>
+Date:   Thu Oct 22 00:22:07 2026 +0000
+
+    Add charge/refund with logging and receipt formatting
+    
+    Implements charge() and refund() against the stub provider (no retries
+    on ProviderTimeout, since the provider lacks idempotency keys), adds
+    structured key=value logging, and adds format_receipt() for one-line
+    receipt strings. Includes pytest coverage mocking the provider.
+
+ payments/charge.py     | 42 ++++++++++++++++++++++++++++++++++++++++++
+ payments/receipts.py   |  8 ++++++++
+ payments/refund.py     | 41 +++++++++++++++++++++++++++++++++++++++++
+ tests/test_charge.py   | 36 ++++++++++++++++++++++++++++++++++++
+ tests/test_receipts.py | 19 +++++++++++++++++++
+ tests/test_refund.py   | 36 ++++++++++++++++++++++++++++++++++++
+ 6 files changed, 182 insertions(+)
+
+commit 24b2d91938252613a888ce8e1af49ff428aea617
+Author: demo <demo@example.com>
+Date:   Thu Oct 22 00:20:38 2026 +0000
+
+    seed: provider stub
+
+ README.md            |  6 ++++++
+ payments/__init__.py |  0
+ payments/provider.py | 19 +++++++++++++++++++
+ 3 files changed, 25 insertions(+)

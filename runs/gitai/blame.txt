@@ -1,0 +1,84 @@
+await: waiting for background service to finish work...
+await: background service finished
+3f0ba1e693d901ffd5ae63e2ddf2a02bbc4f08f1 commit	refs/notes/ai
+== log
+commit 53baae40573589717cf985e4963268eed923614f (HEAD -> main)
+Author: demo <demo@example.com>
+Date:   2026-10-22T00:33:21+00:00
+
+    Tidy docstrings to single-line, preserve rationale as inline comments
+
+    charge() and refund() had multi-line docstrings explaining the
+    no-retry-on-timeout rule; shortened them to one line and moved the
+    rationale to a comment at the point it applies. No behavior change.
+
+    Git AI stats:
+      you  ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░ ai
+           0%                                  100%
+
+commit 59c002c7c7d786127477a40ab544d7caf3cfcf7d
+Author: demo <demo@example.com>
+Date:   2026-10-22T00:32:07+00:00
+
+    Add charge, refund, and receipt formatting with tests
+
+    Includes structured logging and no-retry-on-timeout handling per the
+    provider's lack of idempotency key support.
+    
+    Co-Authored-By: Claude Sonnet 5 <noreply@anthropic.com>
+
+    Git AI stats:
+      you  ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░ ai
+           0%                                  100%
+
+commit dd8c224eced29332aad5cdfd074f114d4da22c2b
+Author: demo <demo@example.com>
+Date:   2026-10-22T00:30:10+00:00
+
+    seed: provider stub
+
+    Git AI stats:
+      you  ········································ ai
+           0%           untracked 100%            0%
+
+== blame
+59c002c7 (claude 2026-10-22 00:32:07 +0000  1) """Charging logic on top of the payment provider client."""
+59c002c7 (claude 2026-10-22 00:32:07 +0000  2) 
+59c002c7 (claude 2026-10-22 00:32:07 +0000  3) import logging
+59c002c7 (claude 2026-10-22 00:32:07 +0000  4) 
+59c002c7 (claude 2026-10-22 00:32:07 +0000  5) from payments.provider import Provider, ProviderError, ProviderTimeout
+59c002c7 (claude 2026-10-22 00:32:07 +0000  6) 
+59c002c7 (claude 2026-10-22 00:32:07 +0000  7) logger = logging.getLogger(__name__)
+59c002c7 (claude 2026-10-22 00:32:07 +0000  8) 
+59c002c7 (claude 2026-10-22 00:32:07 +0000  9) 
+59c002c7 (claude 2026-10-22 00:32:07 +0000 10) def _masked(card: str) -> str:
+59c002c7 (claude 2026-10-22 00:32:07 +0000 11)     return f"***{card[-4:]}" if len(card) >= 4 else "***"
+59c002c7 (claude 2026-10-22 00:32:07 +0000 12) 
+59c002c7 (claude 2026-10-22 00:32:07 +0000 13) 
+59c002c7 (claude 2026-10-22 00:32:07 +0000 14) def charge(provider: Provider, card: str, amount_cents: int) -> str:
+53baae40 (claude 2026-10-22 00:33:21 +0000 15)     """Charge a card for amount_cents via provider and return the charge id."""
+59c002c7 (claude 2026-10-22 00:32:07 +0000 16)     logger.info("charge.attempt card=%s amount_cents=%d", _masked(card), amount_cents)
+59c002c7 (claude 2026-10-22 00:32:07 +0000 17)     try:
+59c002c7 (claude 2026-10-22 00:32:07 +0000 18)         charge_id = provider.charge(card, amount_cents)
+59c002c7 (claude 2026-10-22 00:32:07 +0000 19)     except ProviderTimeout:
+53baae40 (claude 2026-10-22 00:33:21 +0000 20)         # No idempotency keys on the provider side, and a timed-out request may
+53baae40 (claude 2026-10-22 00:33:21 +0000 21)         # have still gone through; retrying here risks double-charging the card.
+59c002c7 (claude 2026-10-22 00:32:07 +0000 22)         logger.error(
+59c002c7 (claude 2026-10-22 00:32:07 +0000 23)             "charge.timeout card=%s amount_cents=%d", _masked(card), amount_cents
+59c002c7 (claude 2026-10-22 00:32:07 +0000 24)         )
+59c002c7 (claude 2026-10-22 00:32:07 +0000 25)         raise
+59c002c7 (claude 2026-10-22 00:32:07 +0000 26)     except ProviderError as exc:
+59c002c7 (claude 2026-10-22 00:32:07 +0000 27)         logger.error(
+59c002c7 (claude 2026-10-22 00:32:07 +0000 28)             "charge.error card=%s amount_cents=%d error=%s",
+59c002c7 (claude 2026-10-22 00:32:07 +0000 29)             _masked(card),
+59c002c7 (claude 2026-10-22 00:32:07 +0000 30)             amount_cents,
+59c002c7 (claude 2026-10-22 00:32:07 +0000 31)             exc,
+59c002c7 (claude 2026-10-22 00:32:07 +0000 32)         )
+59c002c7 (claude 2026-10-22 00:32:07 +0000 33)         raise
+59c002c7 (claude 2026-10-22 00:32:07 +0000 34)     logger.info(
+59c002c7 (claude 2026-10-22 00:32:07 +0000 35)         "charge.success card=%s amount_cents=%d charge_id=%s",
+59c002c7 (claude 2026-10-22 00:32:07 +0000 36)         _masked(card),
+59c002c7 (claude 2026-10-22 00:32:07 +0000 37)         amount_cents,
+59c002c7 (claude 2026-10-22 00:32:07 +0000 38)         charge_id,
+59c002c7 (claude 2026-10-22 00:32:07 +0000 39)     )
+59c002c7 (claude 2026-10-22 00:32:07 +0000 40)     return charge_id
